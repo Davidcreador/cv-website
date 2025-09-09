@@ -204,7 +204,7 @@ export default function Hero() {
               </motion.a>
               
               <motion.a
-                href="/resume.pdf"
+                href="/Resume-David-Pastor-2025.pdf"
                 download
                 className="group px-8 py-4 rounded-full border border-gray-300 dark:border-gray-700 font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-all flex items-center gap-2"
                 whileHover={{ scale: 1.02 }}
