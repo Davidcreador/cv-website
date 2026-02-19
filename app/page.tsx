@@ -3,9 +3,8 @@ import Hero from "@/components/Hero"
 import About from "@/components/About"
 import ExperienceSection from "@/components/Experience"
 import Skills from "@/components/Skills"
-import Education from "@/components/Education"
+import Projects from "@/components/Projects"
 import Contact from "@/components/Contact"
-import ThemeToggle from "@/components/ThemeToggle"
 
 export default function Home() {
   return (
@@ -15,13 +14,15 @@ export default function Home() {
         <Hero />
         <About />
         <ExperienceSection />
+        <Projects />
         <Skills />
-        <Education />
         <Contact />
       </main>
-      <ThemeToggle />
-      <footer className="py-6 text-center text-sm text-muted-foreground bg-secondary/30">
-        <p>&copy; {new Date().getFullYear()} Helmut Pastor. All rights reserved.</p>
+      <footer className="py-8 text-center text-sm font-mono text-muted-foreground border-t border-terminal-border">
+        <div className="container mx-auto px-4">
+          <span className="text-terminal-accent">&copy;</span> {new Date().getFullYear()} Helmut Pastor. 
+          <span className="text-terminal-green ml-2">~/portfolio</span>
+        </div>
       </footer>
     </>
   )

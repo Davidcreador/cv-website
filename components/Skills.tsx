@@ -8,8 +8,7 @@ import {
   Wrench, 
   Palette, 
   Globe,
-  ChevronRight,
-  Sparkles
+  ChevronRight
 } from "lucide-react"
 import { useState } from "react"
 
@@ -20,13 +19,7 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   "Design & Creative": Palette,
 }
 
-interface SkillBarProps {
-  name: string
-  level: number
-  index: number
-}
-
-function SkillBar({ name, level, index }: SkillBarProps) {
+function SkillBar({ name, level, index }: { name: string, level: number, index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -36,34 +29,18 @@ function SkillBar({ name, level, index }: SkillBarProps) {
       className="group"
     >
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+        <span className="text-sm font-medium text-foreground group-hover:text-terminal-accent transition-colors font-mono">
           {name}
         </span>
-        <motion.span 
-          className="text-xs font-semibold text-primary"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: index * 0.05 + 0.3 }}
-          viewport={{ once: true }}
-        >
-          {level}%
-        </motion.span>
+        <span className="text-xs font-mono text-terminal-accent">{level}%</span>
       </div>
-      <div className="relative h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+      <div className="relative h-1.5 bg-terminal-border rounded-full overflow-hidden">
         <motion.div
-          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-accent"
+          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-terminal-accent to-terminal-purple"
           initial={{ width: 0 }}
           whileInView={{ width: `${level}%` }}
-          transition={{ duration: 1, delay: index * 0.05, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: index * 0.05, ease: "easeOut" }}
           viewport={{ once: true }}
-        >
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-        </motion.div>
-        {/* Glow effect on hover */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ filter: "blur(8px)" }}
         />
       </div>
     </motion.div>
@@ -76,48 +53,33 @@ export default function Skills() {
   const CategoryIcon = categoryIcons[currentCategory.title]
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-      </div>
-      
+    <section id="skills" className="py-24 relative">
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4"
-          >
-            <Sparkles className="w-8 h-8 text-primary" />
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Skills & Expertise
+          <span className="font-mono text-terminal-accent text-sm mb-4 block">
+            {'// technical expertise'}
+          </span>
+          <h2 className="section-title text-foreground mb-4">
+            Skills
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive overview of my technical proficiency and creative capabilities
+          <p className="section-subtitle mx-auto">
+            A comprehensive overview of my technical proficiency and capabilities
           </p>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto">
-          {/* Category Selector */}
+        <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-2 mb-12"
+            className="flex flex-wrap justify-center gap-2 mb-8"
           >
             {skillCategories.map((category, index) => {
               const Icon = categoryIcons[category.title]
@@ -128,49 +90,39 @@ export default function Skills() {
                   key={category.title}
                   onClick={() => setSelectedCategory(index)}
                   className={`
-                    relative px-6 py-3 rounded-xl font-medium transition-all
+                    relative px-4 py-2 rounded-lg font-medium transition-all text-sm font-mono
                     ${isActive 
-                      ? 'bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/25' 
-                      : 'bg-card hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground'
+                      ? 'bg-terminal-accent/10 text-terminal-accent border border-terminal-accent/30' 
+                      : 'bg-terminal-bg border border-terminal-border text-muted-foreground hover:border-terminal-accent/50'
                     }
                   `}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <span className="flex items-center gap-2">
                     {Icon && <Icon className="w-4 h-4" />}
                     {category.title}
                   </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeCategory"
-                      className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-xl -z-10"
-                      initial={false}
-                      transition={{ type: "spring", duration: 0.6 }}
-                    />
-                  )}
                 </motion.button>
               )
             })}
           </motion.div>
 
-          {/* Skills Grid */}
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Skills List */}
+          <div className="grid md:grid-cols-2 gap-8">
             <motion.div
               key={selectedCategory}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4 }}
               className="space-y-6"
             >
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 {CategoryIcon && (
-                  <div className="p-2 rounded-lg bg-gradient-to-r from-primary to-accent">
-                    <CategoryIcon className="w-5 h-5 text-white" />
+                  <div className="p-2 rounded-lg bg-terminal-accent/10">
+                    <CategoryIcon className="w-5 h-5 text-terminal-accent" />
                   </div>
                 )}
-                <h3 className="text-2xl font-bold">{currentCategory.title}</h3>
+                <h3 className="text-lg font-semibold">{currentCategory.title}</h3>
               </div>
               
               <div className="space-y-4">
@@ -185,41 +137,21 @@ export default function Skills() {
               </div>
             </motion.div>
 
-            {/* Right Side Content */}
-            <div className="space-y-8">
-              {/* Quick Stats */}
+            <div className="space-y-6">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="grid grid-cols-2 gap-4"
-              >
-                <div className="p-6 rounded-xl bg-card border border-gray-200 dark:border-gray-800">
-                  <div className="text-3xl font-bold gradient-text mb-1">8+</div>
-                  <div className="text-sm text-muted-foreground">Years Experience</div>
-                </div>
-                <div className="p-6 rounded-xl bg-card border border-gray-200 dark:border-gray-800">
-                  <div className="text-3xl font-bold gradient-text mb-1">50+</div>
-                  <div className="text-sm text-muted-foreground">Projects Completed</div>
-                </div>
-              </motion.div>
-
-              {/* Languages */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="p-6 rounded-xl bg-card border border-gray-200 dark:border-gray-800"
+                className="p-6 rounded-xl border border-terminal-border bg-terminal-bg/50"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-gradient-to-r from-primary to-accent">
-                    <Globe className="w-5 h-5 text-white" />
+                  <div className="p-2 rounded-lg bg-terminal-purple/10">
+                    <Globe className="w-5 h-5 text-terminal-purple" />
                   </div>
-                  <h3 className="text-xl font-bold">Languages</h3>
+                  <h3 className="text-lg font-semibold">Languages</h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {languages.map((lang, index) => (
                     <motion.div
                       key={lang.name}
@@ -227,13 +159,13 @@ export default function Skills() {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="flex items-center justify-between p-3 rounded-lg bg-background hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors group cursor-pointer"
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-terminal-border/30 transition-colors"
                     >
                       <div className="flex items-center gap-2">
-                        <ChevronRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                        <span className="font-medium">{lang.name}</span>
+                        <ChevronRight className="w-4 h-4 text-terminal-accent" />
+                        <span className="text-sm font-mono">{lang.name}</span>
                       </div>
-                      <span className="text-sm text-muted-foreground bg-primary/10 px-3 py-1 rounded-full">
+                      <span className="text-xs px-2 py-0.5 rounded bg-terminal-accent/10 text-terminal-accent">
                         {lang.level}
                       </span>
                     </motion.div>
@@ -241,19 +173,16 @@ export default function Skills() {
                 </div>
               </motion.div>
 
-              {/* Additional Info */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20"
+                className="p-4 rounded-xl border border-terminal-border bg-terminal-bg/30 font-mono text-sm text-muted-foreground"
               >
-                <p className="text-sm text-muted-foreground italic">
-                  &quot;Continuously learning and adapting to new technologies. 
-                  My diverse skill set allows me to tackle complex challenges 
-                  and deliver innovative solutions.&quot;
-                </p>
+                <span className="text-terminal-green">$</span> echo $STACK
+                <br />
+                <span className="text-terminal-accent">TypeScript</span> + <span className="text-terminal-purple">React</span> + <span className="text-terminal-orange">Node.js</span>
               </motion.div>
             </div>
           </div>

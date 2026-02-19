@@ -2,23 +2,22 @@
 
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
-import { Menu, X, Home, User, Briefcase, Code, GraduationCap, Mail } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navItems = [
-  { name: "Home", href: "#home", icon: Home },
-  { name: "About", href: "#about", icon: User },
-  { name: "Experience", href: "#experience", icon: Briefcase },
-  { name: "Skills", href: "#skills", icon: Code },
-  { name: "Education", href: "#education", icon: GraduationCap },
-  { name: "Contact", href: "#contact", icon: Mail },
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
+  { name: "Skills", href: "#skills" },
+  { name: "Contact", href: "#contact" },
 ]
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +28,7 @@ export default function Navigation() {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          return rect.top <= 150 && rect.bottom >= 150
         }
         return false
       })
@@ -57,40 +56,34 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+        transition={{ duration: 0.5 }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
             ? "glass py-3"
-            : "bg-transparent py-4"
+            : "bg-transparent py-5"
         )}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <motion.a
               href="#home"
               onClick={(e) => {
                 e.preventDefault()
                 handleNavClick("#home")
               }}
-              className="relative group"
+              className="font-mono text-lg font-bold hover:text-terminal-accent transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="text-2xl font-bold gradient-text">HP</span>
-              <motion.span
-                className="absolute -bottom-1 left-0 w-0 h-0.5 gradient-bg group-hover:w-full transition-all duration-300"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-              />
+              <span className="text-terminal-accent">&lt;</span>
+              HP
+              <span className="text-terminal-accent">/&gt;</span>
             </motion.a>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1 relative">
+            <div className="hidden md:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.substring(1)
-                const Icon = item.icon
                 
                 return (
                   <motion.a
@@ -100,26 +93,19 @@ export default function Navigation() {
                       e.preventDefault()
                       handleNavClick(item.href)
                     }}
-                    onMouseEnter={() => setHoveredItem(item.name)}
-                    onMouseLeave={() => setHoveredItem(null)}
                     className={cn(
-                      "relative px-4 py-2 text-sm font-medium transition-colors rounded-lg",
-                      "hover:text-primary flex items-center gap-2",
-                      isActive ? "text-primary" : "text-muted-foreground"
+                      "relative px-4 py-2 text-sm font-medium transition-colors rounded-md",
+                      "hover:text-terminal-accent",
+                      isActive ? "text-terminal-accent" : "text-muted-foreground"
                     )}
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Icon size={16} className={cn(
-                      "transition-transform",
-                      hoveredItem === item.name && "rotate-12"
-                    )} />
-                    <span>{item.name}</span>
+                    {item.name}
                     {isActive && (
                       <motion.div
-                        className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
-                        layoutId="activeNav"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="absolute bottom-0 left-4 right-4 h-px bg-terminal-accent"
+                        layoutId="nav-indicator"
                       />
                     )}
                   </motion.a>
@@ -127,10 +113,9 @@ export default function Navigation() {
               })}
             </div>
 
-            {/* Mobile Menu Button */}
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-secondary/50 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-terminal-border/50 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -162,7 +147,6 @@ export default function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -171,7 +155,7 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div
@@ -179,13 +163,12 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed right-0 top-0 h-full w-3/4 max-w-sm glass z-50 md:hidden"
+              className="fixed right-0 top-0 h-full w-64 bg-terminal-bg border-l border-terminal-border z-50 md:hidden"
             >
               <div className="p-6 pt-20">
-                <nav className="space-y-2">
+                <nav className="space-y-1">
                   {navItems.map((item, index) => {
                     const isActive = activeSection === item.href.substring(1)
-                    const Icon = item.icon
                     
                     return (
                       <motion.a
@@ -195,27 +178,19 @@ export default function Navigation() {
                           e.preventDefault()
                           handleNavClick(item.href)
                         }}
-                        initial={{ x: 50, opacity: 0 }}
+                        initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: index * 0.05 }}
                         className={cn(
-                          "flex items-center gap-3 px-4 py-3 rounded-lg transition-all",
-                          "hover:bg-primary/10 hover:translate-x-1",
+                          "flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-mono text-sm",
+                          "hover:bg-terminal-border/50 hover:translate-x-1",
                           isActive
-                            ? "bg-primary/10 text-primary font-semibold"
+                            ? "text-terminal-accent bg-terminal-accent/5"
                             : "text-muted-foreground"
                         )}
                       >
-                        <Icon size={20} />
-                        <span>{item.name}</span>
-                        {isActive && (
-                          <motion.div
-                            className="ml-auto w-1 h-4 bg-primary rounded-full"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          />
-                        )}
+                        <span className="text-terminal-accent">$</span>
+                        {item.name}
                       </motion.a>
                     )
                   })}

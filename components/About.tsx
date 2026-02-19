@@ -7,68 +7,69 @@ const highlights = [
   {
     icon: Code2,
     title: "Full Stack Development",
-    description: "Expertise in both frontend and backend technologies"
+    description: "Frontend & backend expertise"
   },
   {
     icon: Palette,
     title: "Design Background",
-    description: "Unique blend of technical and creative skills"
+    description: "Technical + creative blend"
   },
   {
     icon: Users,
     title: "Team Player",
-    description: "Great sense of teamwork and collaboration"
+    description: "Collaboration focused"
   },
   {
     icon: Lightbulb,
     title: "Problem Solver",
-    description: "Enthusiasm for overcoming new challenges"
+    description: "Challenge enthusiast"
   }
 ]
 
 export default function About() {
   return (
-    <section id="about" className="py-20 bg-secondary/30">
+    <section id="about" className="py-24 relative">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
-          <div className="w-20 h-1 bg-primary mx-auto" />
+          <span className="font-mono text-terminal-accent text-sm mb-4 block">
+            {'// about me'}
+          </span>
+          <h2 className="section-title text-foreground">
+            About <span className="gradient-text">Me</span>
+          </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold mb-4">
+            <h3 className="text-xl font-semibold mb-4 text-foreground">
               Full-Stack Software Engineer & Technical Lead
             </h3>
-            <p className="text-muted-foreground mb-4">
-              As a skilled Full-Stack Software Engineer with 11+ years of experience and a Bachelor&apos;s degree 
-              in Graphic Design, I bring a unique blend of technical expertise and creative vision to software development. 
-              My strong focus on Node.js development combined with extensive experience in modern web technologies 
-              enables me to deliver efficient, scalable, and high-performance solutions.
-            </p>
-            <p className="text-muted-foreground mb-4">
-              I&apos;ve contributed to major platforms including NFL.com, Shell&apos;s Renewable Energy Services, 
-              and enterprise solutions for BMW USA and Allergan Aesthetics. My experience spans from leading technical 
-              teams at Critical Mass to architecting microservices at Shell, always focusing on delivering value 
-              through clean, maintainable code and innovative solutions.
-            </p>
-            <p className="text-muted-foreground">
-              Proficient in English and native Spanish speaker, I excel in diverse, international teams. 
-              My expertise includes TypeScript, React, Node.js, cloud technologies (AWS, GCP), and various 
-              database systems. I&apos;m passionate about mentoring junior developers and implementing best practices 
-              in software architecture, DevOps, and Agile methodologies.
-            </p>
+            <div className="space-y-4 text-muted-foreground font-mono text-sm">
+              <p>
+                11+ years experience with a Bachelor&apos;s in Graphic Design. 
+                I bring technical expertise and creative vision to software development.
+              </p>
+              <p>
+                Contributed to major platforms: NFL.com, Shell Renewable Energy, 
+                BMW USA, Allergan Aesthetics. Led teams at Critical Mass, architected 
+                microservices at Shell.
+              </p>
+              <p>
+                Proficient in TypeScript, React, Node.js, AWS, GCP. Native Spanish 
+                speaker, fluent in English. Passionate about mentoring and best practices.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -85,10 +86,10 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                 viewport={{ once: true }}
-                className="p-4 bg-background rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                className="p-4 rounded-xl border border-terminal-border bg-terminal-bg/50 hover-glow"
               >
-                <item.icon className="w-8 h-8 text-primary mb-2" />
-                <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
+                <item.icon className="w-6 h-6 text-terminal-accent mb-3" />
+                <h4 className="font-semibold text-sm mb-1 text-foreground">{item.title}</h4>
                 <p className="text-xs text-muted-foreground">{item.description}</p>
               </motion.div>
             ))}
@@ -98,15 +99,17 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-12 p-6 bg-primary/10 rounded-lg"
+          className="mt-12 p-6 rounded-xl border border-terminal-border bg-terminal-bg/30"
         >
-          <blockquote className="text-center italic">
-            &ldquo;Helmut is a smart software engineer with a great sense of teamwork, 
-            he always demonstrated enthusiasm for overcoming new challenges&rdquo;
-            <footer className="mt-2 text-sm text-muted-foreground">
-              - Professional Recommendation
+          <blockquote className="text-center font-mono text-sm">
+            <span className="text-terminal-purple">&ldquo;</span>
+            Helmut is a smart software engineer with a great sense of teamwork, 
+            he always demonstrated enthusiasm for overcoming new challenges
+            <span className="text-terminal-purple">&rdquo;</span>
+            <footer className="mt-3 text-xs text-muted-foreground">
+              — Professional Recommendation
             </footer>
           </blockquote>
         </motion.div>
